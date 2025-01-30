@@ -1,319 +1,335 @@
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Overwatch 2 Heroes Database</title>
     <style>
-        :root {
-            --primary-red: #FF4655;
-            --dark-bg: #0F1725;
-            --light-text: #FFFFFF;
-        }
+      :root {
+        --primary-red: #ff4655;
+        --dark-bg: #0f1725;
+        --light-text: #ffffff;
+      }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Arial", sans-serif;
+      }
 
-        body {
-            background-color: var(--dark-bg);
-            color: var(--light-text);
-            min-height: 100vh;
-        }
+      body {
+        background-color: var(--dark-bg);
+        color: var(--light-text);
+        min-height: 100vh;
+      }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
 
-        header {
-            text-align: center;
-            padding: 2rem 0;
-            background: linear-gradient(to right, var(--primary-red), #8B0000);
-            margin-bottom: 2rem;
-        }
+      header {
+        text-align: center;
+        padding: 2rem 0;
+        background: linear-gradient(to right, var(--primary-red), #8b0000);
+        margin-bottom: 2rem;
+      }
 
-        .hero-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-        }
+      .hero-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+      }
 
-        .hero-card {
-            background: #1A2230;
-            border-radius: 10px;
-            transition: transform 0.6s;
-            cursor: pointer;
-            min-height: 600px;
-            transform-style: preserve-3d;
-            position: relative;
-        }
+      .hero-card {
+        background: #1a2230;
+        border-radius: 10px;
+        transition: transform 0.6s;
+        cursor: pointer;
+        min-height: 600px;
+        transform-style: preserve-3d;
+        position: relative;
+      }
 
-        .hero-card.flipped {
-            transform: rotateY(180deg);
-        }
+      .hero-card.flipped {
+        transform: rotateY(180deg);
+      }
 
-        .front, .back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            padding: 1.5rem;
-        }
+      .front,
+      .back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        padding: 1.5rem;
+      }
 
-        .back {
-            transform: rotateY(180deg);
-            background: #1A2230;
-        }
+      .back {
+        transform: rotateY(180deg);
+        background: #1a2230;
+      }
 
-        .hero-image {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            border-radius: 5px;
-            margin-bottom: 1rem;
-        }
+      .hero-image {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 5px;
+        margin-bottom: 1rem;
+      }
 
-        .hero-role {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: var(--primary-red);
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-weight: bold;
-        }
+      .hero-role {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: var(--primary-red);
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-weight: bold;
+      }
 
-        .stat-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            margin: 1rem 0;
-        }
+      .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin: 1rem 0;
+      }
 
-        .stat-item {
-            background: #2D3746;
-            padding: 0.8rem;
-            border-radius: 5px;
-            text-align: center;
-        }
+      .stat-item {
+        background: #2d3746;
+        padding: 0.8rem;
+        border-radius: 5px;
+        text-align: center;
+      }
 
-        .ability-list {
-            list-style: none;
-            margin-top: 1rem;
-        }
+      .ability-list {
+        list-style: none;
+        margin-top: 1rem;
+      }
 
-        .ability-item {
-            padding: 0.5rem;
-            background: #2D3746;
-            margin-bottom: 0.5rem;
-            border-radius: 5px;
-            font-size: 0.9rem;
-        }
+      .ability-item {
+        padding: 0.5rem;
+        background: #2d3746;
+        margin-bottom: 0.5rem;
+        border-radius: 5px;
+        font-size: 0.9rem;
+      }
 
-        .ultimate {
-            color: var(--primary-red);
-            font-weight: bold;
-            margin-top: 1rem;
-        }
+      .ultimate {
+        color: var(--primary-red);
+        font-weight: bold;
+        margin-top: 1rem;
+      }
 
-        .filter-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
+      .filter-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
 
-        .filter-btn {
-            background: none;
-            border: 2px solid var(--primary-red);
-            color: var(--light-text);
-            padding: 0.8rem 2rem;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+      .filter-btn {
+        background: none;
+        border: 2px solid var(--primary-red);
+        color: var(--light-text);
+        padding: 0.8rem 2rem;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
 
-        .filter-btn.active {
-            background: var(--primary-red);
-        }
+      .filter-btn.active {
+        background: var(--primary-red);
+      }
 
-        .counters-container {
-            position: absolute;
-            bottom: 1rem;
-            left: 1rem;
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-            z-index: 2;
-        }
+      .counters-container {
+        position: absolute;
+        bottom: 1rem;
+        left: 1rem;
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        z-index: 2;
+      }
 
-        .counter-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 2px solid var(--primary-red);
-            object-fit: cover;
-            background: var(--dark-bg);
-            transition: transform 0.3s ease;
-        }
+      .counter-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 2px solid var(--primary-red);
+        object-fit: cover;
+        background: var(--dark-bg);
+        transition: transform 0.3s ease;
+      }
 
-        .counter-icon:hover {
-            transform: scale(1.2);
-            z-index: 1;
-        }
+      .counter-icon:hover {
+        transform: scale(1.2);
+        z-index: 1;
+      }
 
-        .counter-label {
-            font-size: 0.8rem;
-            margin-right: 0.5rem;
-            color: var(--primary-red);
-        }
+      .counter-label {
+        font-size: 0.8rem;
+        margin-right: 0.5rem;
+        color: var(--primary-red);
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <h1>Overwatch Counter Pounter list</h1>
-        <p>Season 9 Competitive Update</p>
+      <h1>Overwatch Counter Pounter list</h1>
+      <p>Season 9 Competitive Update</p>
     </header>
 
     <div class="container">
-        <div class="filter-buttons">
-            <button class="filter-btn active" data-role="all">All</button>
-            <button class="filter-btn" data-role="Tank">Tank</button>
-            <button class="filter-btn" data-role="Damage">Damage</button>
-            <button class="filter-btn" data-role="Support">Support</button>
-        </div>
+      <div class="filter-buttons">
+        <button class="filter-btn active" data-role="all">All</button>
+        <button class="filter-btn" data-role="Tank">Tank</button>
+        <button class="filter-btn" data-role="Damage">Damage</button>
+        <button class="filter-btn" data-role="Support">Support</button>
+      </div>
 
-        <div class="hero-grid" id="heroContainer"></div>
+      <div class="hero-grid" id="heroContainer"></div>
     </div>
 
     <script>
-        const heroes = [
-            {
-                name: "Reinhardt",
-                role: "Tank",
-                hp: 625,
-                armor: 300,
-                shields: 0,
-                dps: "85 (Melee)",
-                abilities: ["Rocket Hammer", "Barrier Field", "Charge", "Fire Strike"],
-                ultimate: "Earthshatter",
-                counters: [
-                    "https://static.playoverwatch.com/img/pages/heroes/reaper/portrait.png",
-                    "https://static.playoverwatch.com/img/pages/heroes/mei/portrait.png",
-                    "https://static.playoverwatch.com/img/pages/heroes/pharah/portrait.png"
-                ],
-                image: "./Images/Rein.png"
-            },
-            {
-                name: "Tracer",
-                role: "Damage",
-                hp: 150,
-                armor: 0,
-                shields: 0,
-                dps: "240",
-                abilities: ["Pulse Pistols", "Blink", "Recall"],
-                ultimate: "Pulse Bomb",
-                counters: [
-                    "https://static.playoverwatch.com/img/pages/heroes/cassidy/portrait.png",
-                    "https://static.playoverwatch.com/img/pages/heroes/torbjorn/portrait.png",
-                    "https://static.playoverwatch.com/img/pages/heroes/brigitte/portrait.png"
-                ],
-                image: "./Images/Tracer.png"
-            },
-            {
-                name: "Mercy1",
-                role: "Support",
-                hp: 200,
-                armor: 0,
-                shields: 0,
-                dps: "N/A",
-                abilities: ["Caduceus Staff", "Guardian Angel", "Resurrect"],
-                ultimate: "Valkyrie",
-                counters: [
-                    "./Images/Torb.png",
-                    "https://static.playoverwatch.com/img/pages/heroes/genji/portrait.png",
-                    "https://static.playoverwatch.com/img/pages/heroes/sombra/portrait.png"
-                ],
-                image: "./Images/Mercy.png"
-            },
-            {
-                name: "Genji",
-                role: "Damage",
-                hp: 200,
-                armor: 0,
-                shields: 0,
-                dps: "102-180",
-                abilities: ["Shuriken", "Deflect", "Swift Strike"],
-                ultimate: "Dragonblade",
-                counters: [
-                    "https://static.playoverwatch.com/img/pages/heroes/winston/portrait.png",
-                    "https://static.playoverwatch.com/img/pages/heroes/moira/portrait.png",
-                    "https://static.playoverwatch.com/img/pages/heroes/zarya/portrait.png"
-                ],
-                image: "./Images/Genji.png"
-            },
-            {
-                name: "Zenyatta",
-                role: "Support",
-                hp: 75,
-                armor: 175,
-                shields: 0,
-                dps: "115",
-                abilities: ["Orb of Destruction", "Orb of Harmony", "Orb of Discord"],
-                ultimate: "Transcendence",
-                counters: [
-                    "https://static.playoverwatch.com/img/pages/heroes/tracer/portrait.png",
-                    "https://static.playoverwatch.com/img/pages/heroes/genji/portrait.png",
-                    "https://static.playoverwatch.com/img/pages/heroes/sombra/portrait.png"
-                ],
-                image: "./Images/Zen.png"
-            },
-                        {
-                name: "Road hog1",
-                role: "Tank",
-                hp: 750,
-                armor: 0,
-                shields: 0,
-                dps: "115",
-                abilities: ["Scrap Gun", "Take a Breather", "Chain Hook"],
-                ultimate: "Transcendence",
-                counters: [
-                    "https://static.playoverwatch.com/img/pages/heroes/tracer/portrait.png",
-                    "https://static.playoverwatch.com/img/pages/heroes/genji/portrait.png",
-                    "https://static.playoverwatch.com/img/pages/heroes/sombra/portrait.png"
-                ],
-                image: "./Images/Road.png"
-            }
-        ];
+      const heroes = [
+        {
+          name: "Reinhardt",
+          role: "Tank",
+          hp: 625,
+          armor: 300,
+          shields: 0,
+          dps: "85 (Melee)",
+          abilities: [
+            "Rocket Hammer",
+            "Barrier Field",
+            "Charge",
+            "Fire Strike",
+          ],
+          ultimate: "Earthshatter",
+          counters: [
+            "https://static.playoverwatch.com/img/pages/heroes/reaper/portrait.png",
+            "https://static.playoverwatch.com/img/pages/heroes/mei/portrait.png",
+            "https://static.playoverwatch.com/img/pages/heroes/pharah/portrait.png",
+          ],
+          image: "../Images/Rein.png",
+        },
+        {
+          name: "Tracer",
+          role: "Damage",
+          hp: 150,
+          armor: 0,
+          shields: 0,
+          dps: "240",
+          abilities: ["Pulse Pistols", "Blink", "Recall"],
+          ultimate: "Pulse Bomb",
+          counters: [
+            "https://static.playoverwatch.com/img/pages/heroes/cassidy/portrait.png",
+            "https://static.playoverwatch.com/img/pages/heroes/torbjorn/portrait.png",
+            "https://static.playoverwatch.com/img/pages/heroes/brigitte/portrait.png",
+          ],
+          image: "../Images/Tracer.png",
+        },
+        {
+          name: "Mercy1",
+          role: "Support",
+          hp: 200,
+          armor: 0,
+          shields: 0,
+          dps: "N/A",
+          abilities: ["Caduceus Staff", "Guardian Angel", "Resurrect"],
+          ultimate: "Valkyrie",
+          counters: [
+            "./Images/Torb.png",
+            "https://static.playoverwatch.com/img/pages/heroes/genji/portrait.png",
+            "https://static.playoverwatch.com/img/pages/heroes/sombra/portrait.png",
+          ],
+          image: "../Images/Mercy.png",
+        },
+        {
+          name: "Genji",
+          role: "Damage",
+          hp: 200,
+          armor: 0,
+          shields: 0,
+          dps: "102-180",
+          abilities: ["Shuriken", "Deflect", "Swift Strike"],
+          ultimate: "Dragonblade",
+          counters: [
+            "https://static.playoverwatch.com/img/pages/heroes/winston/portrait.png",
+            "https://static.playoverwatch.com/img/pages/heroes/moira/portrait.png",
+            "https://static.playoverwatch.com/img/pages/heroes/zarya/portrait.png",
+          ],
+          image: "../Images/Genji.png",
+        },
+        {
+          name: "Zenyatta",
+          role: "Support",
+          hp: 75,
+          armor: 175,
+          shields: 0,
+          dps: "115",
+          abilities: ["Orb of Destruction", "Orb of Harmony", "Orb of Discord"],
+          ultimate: "Transcendence",
+          counters: [
+            "https://static.playoverwatch.com/img/pages/heroes/tracer/portrait.png",
+            "https://static.playoverwatch.com/img/pages/heroes/genji/portrait.png",
+            "https://static.playoverwatch.com/img/pages/heroes/sombra/portrait.png",
+          ],
+          image: "../Images/Zen.png",
+        },
+        {
+          name: "Road hog1",
+          role: "Tank",
+          hp: 750,
+          armor: 0,
+          shields: 0,
+          dps: "115",
+          abilities: ["Scrap Gun", "Take a Breather", "Chain Hook"],
+          ultimate: "Transcendence",
+          counters: [
+            "https://static.playoverwatch.com/img/pages/heroes/tracer/portrait.png",
+            "https://static.playoverwatch.com/img/pages/heroes/genji/portrait.png",
+            "https://static.playoverwatch.com/img/pages/heroes/sombra/portrait.png",
+          ],
+          image: "../Images/OW2_Dva.webp",
+        },
+      ];
 
-        const heroContainer = document.getElementById('heroContainer');
-        const filterButtons = document.querySelectorAll('.filter-btn');
+      const heroContainer = document.getElementById("heroContainer");
+      const filterButtons = document.querySelectorAll(".filter-btn");
 
-        function renderHeroes(role = 'all') {
-            heroContainer.innerHTML = '';
-            const filteredHeroes = role === 'all' ? heroes : heroes.filter(hero => hero.role === role);
+      function renderHeroes(role = "all") {
+        heroContainer.innerHTML = "";
+        const filteredHeroes =
+          role === "all" ? heroes : heroes.filter((hero) => hero.role === role);
 
-            filteredHeroes.forEach(hero => {
-                const card = document.createElement('div');
-                card.className = 'hero-card';
-                card.innerHTML = `
+        filteredHeroes.forEach((hero) => {
+          const card = document.createElement("div");
+          card.className = "hero-card";
+          card.innerHTML = `
                     <div class="front">
                         <div class="hero-role">${hero.role}</div>
-                        ${hero.counters.length > 0 ? `
+                        ${
+                          hero.counters.length > 0
+                            ? `
                             <div class="counters-container">
                                 <span class="counter-label">Counters:</span>
-                                ${hero.counters.map(counter => `
+                                ${hero.counters
+                                  .map(
+                                    (counter) => `
                                     <img src="${counter}" class="counter-icon" alt="Counter">
-                                `).join('')}
+                                `
+                                  )
+                                  .join("")}
                             </div>
-                        ` : ''}
-                        <img src="${hero.image}" class="hero-image" alt="${hero.name}">
+                        `
+                            : ""
+                        }
+                        <img src="${hero.image}" class="hero-image" alt="${
+            hero.name
+          }">
                         <h3>${hero.name}</h3>
                         <div class="stat-grid">
                             <div class="stat-item">
@@ -337,30 +353,35 @@
                     <div class="back">
                         <h3>${hero.name}'s Abilities</h3>
                         <ul class="ability-list">
-                            ${hero.abilities.map(ability => `<li class="ability-item">${ability}</li>`).join('')}
+                            ${hero.abilities
+                              .map(
+                                (ability) =>
+                                  `<li class="ability-item">${ability}</li>`
+                              )
+                              .join("")}
                         </ul>
                         <div class="ultimate">Ultimate: ${hero.ultimate}</div>
                     </div>
                 `;
 
-                card.addEventListener('click', () => {
-                    card.classList.toggle('flipped');
-                });
+          card.addEventListener("click", () => {
+            card.classList.toggle("flipped");
+          });
 
-                heroContainer.appendChild(card);
-            });
-        }
-
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                renderHeroes(button.dataset.role);
-            });
+          heroContainer.appendChild(card);
         });
+      }
 
-        // Initial render
-        renderHeroes();
+      filterButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          filterButtons.forEach((btn) => btn.classList.remove("active"));
+          button.classList.add("active");
+          renderHeroes(button.dataset.role);
+        });
+      });
+
+      // Initial render
+      renderHeroes();
     </script>
-</body>
+  </body>
 </html>
