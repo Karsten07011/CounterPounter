@@ -132,7 +132,7 @@
       .filter-btn {
         background: none;
         border: 2px solid var(--primary-red);
-        color: var(--light-text);
+        color: var (--light-text);
         padding: 0.8rem 2rem;
         border-radius: 30px;
         cursor: pointer;
@@ -192,6 +192,7 @@
       <div class="hero-grid" id="heroContainer"></div>
     </div>
 
+    <script src="./Images.js"></script>
     <script>
       const heroes = [
         {
@@ -208,12 +209,8 @@
             "Fire Strike",
           ],
           ultimate: "Earthshatter",
-          counters: [
-            "https://static.playoverwatch.com/img/pages/heroes/reaper/portrait.png",
-            "https://static.playoverwatch.com/img/pages/heroes/mei/portrait.png",
-            "https://static.playoverwatch.com/img/pages/heroes/pharah/portrait.png",
-          ],
-          image: "./Rein.png",
+          counters: [heroImages.reaper, heroImages.mei, heroImages.pharah],
+          image: heroImages.reinhardt,
         },
         {
           name: "Tracer",
@@ -225,14 +222,14 @@
           abilities: ["Pulse Pistols", "Blink", "Recall"],
           ultimate: "Pulse Bomb",
           counters: [
-            "https://static.playoverwatch.com/img/pages/heroes/cassidy/portrait.png",
-            "https://static.playoverwatch.com/img/pages/heroes/torbjorn/portrait.png",
-            "https://static.playoverwatch.com/img/pages/heroes/brigitte/portrait.png",
+            heroImages.cassidy,
+            heroImages.torbjorn,
+            heroImages.brigitte,
           ],
-          image: "./Tracer.png",
+          image: heroImages.tracer,
         },
         {
-          name: "Mercy1",
+          name: "Mercy",
           role: "Support",
           hp: 200,
           armor: 0,
@@ -240,12 +237,8 @@
           dps: "N/A",
           abilities: ["Caduceus Staff", "Guardian Angel", "Resurrect"],
           ultimate: "Valkyrie",
-          counters: [
-            "./Torb.png",
-            "https://static.playoverwatch.com/img/pages/heroes/genji/portrait.png",
-            "https://static.playoverwatch.com/img/pages/heroes/sombra/portrait.png",
-          ],
-          image: "./Mercy.png",
+          counters: [heroImages.torbjorn, heroImages.genji, heroImages.sombra],
+          image: heroImages.mercy,
         },
         {
           name: "Genji",
@@ -256,12 +249,8 @@
           dps: "102-180",
           abilities: ["Shuriken", "Deflect", "Swift Strike"],
           ultimate: "Dragonblade",
-          counters: [
-            "https://static.playoverwatch.com/img/pages/heroes/winston/portrait.png",
-            "https://static.playoverwatch.com/img/pages/heroes/moira/portrait.png",
-            "https://static.playoverwatch.com/img/pages/heroes/zarya/portrait.png",
-          ],
-          image: "./Genji.png",
+          counters: [heroImages.winston, heroImages.moira, heroImages.zarya],
+          image: heroImages.genji,
         },
         {
           name: "Zenyatta",
@@ -272,29 +261,20 @@
           dps: "115",
           abilities: ["Orb of Destruction", "Orb of Harmony", "Orb of Discord"],
           ultimate: "Transcendence",
-          counters: [
-            "https://static.playoverwatch.com/img/pages/heroes/tracer/portrait.png",
-            "https://static.playoverwatch.com/img/pages/heroes/genji/portrait.png",
-            "https://static.playoverwatch.com/img/pages/heroes/sombra/portrait.png",
-          ],
-          image: "./Zen.png",
+          counters: [heroImages.tracer, heroImages.genji, heroImages.sombra],
+          image: heroImages.zenyatta,
         },
         {
-          name: "Road hog1",
+          name: "Roadhog",
           role: "Tank",
           hp: 750,
           armor: 0,
           shields: 0,
           dps: "115",
           abilities: ["Scrap Gun", "Take a Breather", "Chain Hook"],
-          ultimate: "Transcendence",
-          counters: [
-            "https://static.playoverwatch.com/img/pages/heroes/tracer/portrait.png",
-            "https://static.playoverwatch.com/img/pages/heroes/genji/portrait.png",
-            "https://static.playoverwatch.com/img/pages/heroes/sombra/portrait.png",
-          ],
-          image:
-            "https://static.wikia.nocookie.net/overwatch_gamepedia/images/1/1a/OW2_Dva.png/revision/latest?cb=20241108201346",
+          ultimate: "Whole Hog",
+          counters: [heroImages.tracer, heroImages.genji, heroImages.sombra],
+          image: heroImages.roadhog,
         },
       ];
 
@@ -310,60 +290,55 @@
           const card = document.createElement("div");
           card.className = "hero-card";
           card.innerHTML = `
-                    <div class="front">
-                        <div class="hero-role">${hero.role}</div>
-                        ${
-                          hero.counters.length > 0
-                            ? `
-                            <div class="counters-container">
-                                <span class="counter-label">Counters:</span>
-                                ${hero.counters
-                                  .map(
-                                    (counter) => `
-                                    <img src="${counter}" class="counter-icon" alt="Counter">
-                                `
-                                  )
-                                  .join("")}
-                            </div>
-                        `
-                            : ""
-                        }
-                        <img src="${hero.image}" class="hero-image" alt="${
-            hero.name
-          }">
-                        <h3>${hero.name}</h3>
-                        <div class="stat-grid">
-                            <div class="stat-item">
-                                <small>HP</small>
-                                <p>${hero.hp}</p>
-                            </div>
-                            <div class="stat-item">
-                                <small>Armor</small>
-                                <p>${hero.armor}</p>
-                            </div>
-                            <div class="stat-item">
-                                <small>Shields</small>
-                                <p>${hero.shields}</p>
-                            </div>
-                            <div class="stat-item">
-                                <small>DPS</small>
-                                <p>${hero.dps}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="back">
-                        <h3>${hero.name}'s Abilities</h3>
-                        <ul class="ability-list">
-                            ${hero.abilities
-                              .map(
-                                (ability) =>
-                                  `<li class="ability-item">${ability}</li>`
-                              )
-                              .join("")}
-                        </ul>
-                        <div class="ultimate">Ultimate: ${hero.ultimate}</div>
-                    </div>
-                `;
+            <div class="front">
+              <div class="hero-role">${hero.role}</div>
+              ${
+                hero.counters.length > 0
+                  ? `
+                  <div class="counters-container">
+                    <span class="counter-label">Counters:</span>
+                    ${hero.counters
+                      .map(
+                        (counter) => `
+                        <img src="${counter}" class="counter-icon" alt="Counter">
+                      `
+                      )
+                      .join("")}
+                  </div>
+                `
+                  : ""
+              }
+              <img src="${hero.image}" class="hero-image" alt="${hero.name}">
+              <h3>${hero.name}</h3>
+              <div class="stat-grid">
+                <div class="stat-item">
+                  <small>HP</small>
+                  <p>${hero.hp}</p>
+                </div>
+                <div class="stat-item">
+                  <small>Armor</small>
+                  <p>${hero.armor}</p>
+                </div>
+                <div class="stat-item">
+                  <small>Shields</small>
+                  <p>${hero.shields}</p>
+                </div>
+                <div class="stat-item">
+                  <small>DPS</small>
+                  <p>${hero.dps}</p>
+                </div>
+              </div>
+            </div>
+            <div class="back">
+              <h3>${hero.name}'s Abilities</h3>
+              <ul class="ability-list">
+                ${hero.abilities
+                  .map((ability) => `<li class="ability-item">${ability}</li>`)
+                  .join("")}
+              </ul>
+              <div class="ultimate">Ultimate: ${hero.ultimate}</div>
+            </div>
+          `;
 
           card.addEventListener("click", () => {
             card.classList.toggle("flipped");
