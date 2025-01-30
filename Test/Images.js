@@ -1,5 +1,5 @@
 const heroImages = {
-  moira: "https://static.playoverwatch.com/img/pages/heroes/moira/portrait.png",
+  moira: "./Genji.png",
   zarya: "https://static.playoverwatch.com/img/pages/heroes/zarya/portrait.png",
   zenyatta:
     "https://static.wikia.nocookie.net/overwatch_gamepedia/images/1/1a/OW2_Dva.png/revision/latest?cb=20241108201346",
@@ -23,7 +23,7 @@ const heroImages = {
   genji: "https://static.playoverwatch.com/img/pages/heroes/genji/portrait.png",
   sombra:
     "https://static.playoverwatch.com/img/pages/heroes/sombra/portrait.png",
-  mercy: "https://static.playoverwatch.com/img/pages/heroes/mercy/portrait.png",
+  mercy: "./Mercy.png",
   winston:
     "https://static.playoverwatch.com/img/pages/heroes/winston/portrait.png",
 };
